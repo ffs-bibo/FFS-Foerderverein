@@ -1,0 +1,118 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = de_DE
+% !TEX TS-program = lualatex
+\documentclass[
+	version=last,
+	paper=A4,
+	fontsize=12pt,
+	parskip=half,
+	footlines=4,
+	headlines=1,
+]{scrartcl}
+\usepackage{scrlayer-scrpage}
+\usepackage{polyglossia}
+\setmainlanguage[spelling=new,variant=german]{german}
+\usepackage{etoolbox}
+\usepackage{libertine}
+\usepackage{microtype}
+\usepackage{fontspec}
+\usepackage{tabularray}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[german=guillemets]{csquotes}
+\usepackage[framemethod=TikZ]{mdframed}
+\setmonofont{Liberation Mono}
+
+\definecolor{linkclr}{rgb}{0, 0, 0.7}
+\hypersetup{
+    pdfauthor={Förderverein der Friedrich-Fröbel-Schule e.V.},
+    pdftitle={Aufnahmeantrag Förderverein der Friedrich-Fröbel-Schule e.V.},
+    pdfsubject={Ausfüllbarer Aufnahmeantrag des Fördervereins der Friedrich-Fröbel-Schule e.V. in Frankfurt/Niederrad},
+    pdfkeywords={Förderverein,Frankfurt,Niederrad,Friedrich-Fröbel-Schule}
+	unicode,
+	bookmarksnumbered=false,
+	breaklinks=false,
+	colorlinks=true,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	menucolor=black,
+	urlcolor=linkclr,
+}
+
+\clearpairofpagestyles
+\setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
+\ohead{}
+\chead{\normalfont\sffamily\textsc{Förderverein der Friedrich-Fröbel-Schule e.V.}}
+\ihead{}
+\ifoot{%
+	\textbf{\textsc{Anschrift:}}\\
+	Förderverein der Friedrich-Fröbel-Schule e.V.\\Else-Alken-Straße~3\\60528 Frankfurt
+}
+\cfoot{}
+\ofoot{%
+	\textbf{\textsc{Bankverbindung:}}\\
+	IBAN:~\texttt{DE93~5019~0000~6301~1916~91} \\BIC:~\texttt{FFVBDEFF} (Frankfurt Volksbank eG)
+}
+\setlength{\parindent}{0pt}
+\renewcommand\raggedsection{\centering} % make sure section headings are centered
+\def\LayoutTextField#1#2{#2} % fixes spacing around text fields
+
+\newrobustcmd{\FFSTextField}[3]{%
+	\tikz[baseline=(tf#1.base)] {%
+		\node[inner sep=0pt,inner ysep=1.5pt,outer sep=0pt] (tf#1) {\TextField[borderwidth=.4pt,borderstyle=I,bordercolor=gray,name=#1,width=\dimexpr#2]{}};%
+		\draw[dashed,gray,very thick] (tf#1.south west) -- (tf#1.south east);%
+		\node[anchor=north west,yshift=1pt,gray] (lbltf#1) at (tf#1.south west) {\footnotesize\sffamily #3};%
+	}%
+}%
+\newrobustcmd{\FFSTextFieldLW}[2]{\FFSTextField{#1}{\linewidth}{#2}}
+\newrobustcmd{\FFSTextFieldSM}[3]{\FFSTextField{#1}{#2\linewidth-2.4pt}{#3}}
+\RedeclareSectionCommand[beforeskip=.3\baselineskip,afterskip=.3\baselineskip]{section}
+\RedeclareSectionCommand[beforeskip=.3\baselineskip,afterskip=.3\baselineskip]{subsection}
+%\usepackage{lua-visual-debug}
+
+\begin{document}
+	\section*{Aufnahmeantrag\texorpdfstring{\tikz \node[overlay,baseline=text,xshift=4cm,yshift=1cm] {\includegraphics[scale=0.6]{FFS-Logo.pdf}};}{}}
+	
+	\begin{Form}
+	% https://opensource.adobe.com/dc-acrobat-sdk-docs/library/jsapiref/index.html
+		\begin{tblr}{
+				colspec={X[1,m]X[1,m]},
+			}
+			\FFSTextFieldLW{nachname}{Nachname} & \FFSTextFieldLW{vorname}{Vorname} \\
+	
+			\FFSTextFieldSM{strasse}{.8}{Straßenname} \FFSTextFieldSM{hausnummer}{.2}{Hausnr.} & \FFSTextFieldSM{postleitzahl}{.3}{Postleitzahl} \FFSTextFieldSM{ort}{.7}{Ort} \\
+	
+			\FFSTextFieldLW{geburtsdatum}{Geburtsdatum} & {} \\
+	
+			\FFSTextFieldLW{emailadresse}{E-Mail-Adresse} & \FFSTextFieldLW{telefon}{Telefonnummer} \\
+	
+			\FFSTextFieldLW{kinder}{Namen des Kindes oder der Kinder} & \FFSTextFieldLW{klassen}{Klassen des Kindes oder der Kinder} \\
+		\end{tblr}
+		
+		Hiermit beantrage ich die Mitgliedschaft im \textsc{Förderverein der Friedrich-Fröbel-Schule e.V.} in Frankfurt-Niederrad und erkenne die Satzung an. \href{https://www.fv-ffs.de/app/download/5811864982/2016-11-09+Satzung+des+F%C3%B6rdervereins+der+Friedrich-Fr%C3%B6bel-Schule.pdf}{Die Satzung} sowie die Höhe des Vereinsbeitrags sind auf \href{https://www.fv-ffs.de}{der Homepage des Vereins} einsehbar. Der jährliche Vereinsbeitrag beträgt zurzeit 20,- € und ist gemäß §~10b~EStG (\enquote{Steuerbegünstigte Zwecke}) abzugsfähig.
+		
+		Mit der Speicherung, Übermittlung und Verarbeitung meiner personenbezogenen Daten für Vereinszwecke bin ich einverstanden. (* = Pflichtangabe)
+	
+		\subsubsection*{SEPA-Mandat (Einzugsermächtigung)}
+
+		Ich möchte den Jahresbeitrag von meinem Konto abbuchen lassen und erteile dem Förderverein der Friedrich-Fröbel-Schule eine Einzugsermächtigung auf Widerruf.
+	
+		\begin{tblr}{
+			colspec={X[1,m]X[1,m]},
+		}
+			\FFSTextFieldLW{iban}{IBAN (Kontonummer)} & \FFSTextFieldLW{kontoinhaber}{Kontoinhaber} \\
+			\FFSTextFieldLW{bic}{BIC} & \FFSTextFieldLW{bankname}{Name der Bank} \\
+		\end{tblr}
+
+		\begin{mdframed}[backgroundcolor=gray!15,roundcorner=5pt]
+			\subsubsection*{Unterschrift}
+			\begin{tblr}{
+			colspec={X[1,m]X[1,m]},
+			}
+				\FFSTextFieldSM{unterschriftort}{.6}{Ort} \FFSTextFieldSM{datum}{.4}{Datum} & \FFSTextFieldLW{unterschrift}{Unterschrift} \\
+			\end{tblr}
+		\end{mdframed}
+	\end{Form}
+\end{document}

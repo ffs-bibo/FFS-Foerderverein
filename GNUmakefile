@@ -12,8 +12,6 @@ all: $(TARGETS)
 
 $(TARGETS:.pdf=.lua): $(TARGETS)
 
-Schulbücherei.pdf: Schulbücherei.csv
-
 CLEAN: clean
 	rm -f $(TARGETS)
 
